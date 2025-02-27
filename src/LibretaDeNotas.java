@@ -79,12 +79,16 @@ class LibretaDeNotas {
     // Método para mostrar las opciones del menú
     private void mostrarOpcionesMenu() {
         System.out.println("""
-        ##############Menú de Opciones###############
-        1. Mostrar el Promedio de Notas por Estudiante.
-        2. Mostrar la Nota Máxima y Mínima por Estudiante.
-        3. Mostrar si la Nota es Aprobatoria o Reprobatoria por Estudiante.
-        4. Mostrar si la Nota está por Sobre o por Debajo del Promedio del Curso por Estudiante.
-        0. Salir del Menú.
+        _______________________________________________________________________
+        |#######################Menú de Opciones###############################|
+        |1. Mostrar el Promedio de Notas por Estudiante.                       |
+        |2. Mostrar la Nota Máxima y Mínima por Estudiante.                    |
+        |3. Mostrar si la nota es Aprobatoria o Reprobatoria por Estudiante.   |
+        |4. Mostrar si la nota es superior o inferior al                       |
+        |   promedio del curso por estudiante.                                 |
+        |0. Salir del Menú.                                                    |
+        |######################################################################|
+        |______________________________________________________________________|
         """);
     }
 
@@ -150,20 +154,26 @@ class LibretaDeNotas {
         }
     }
 
-    // Métodos reutilizables para entrada de datos y validación
+    //#### Métodos reutilizables para entrada de datos y validación
 
     // Método para obtener un entero positivo
     private int obtenerEnteroPositivo(String mensaje) {
         Scanner scanner = new Scanner(System.in);
         int valor;
         do {
-            System.out.print(mensaje);
-            valor = scanner.nextInt();
-            if (valor <= 0) {
-                System.out.println("El valor debe ser un número positivo. Intente nuevamente.");
+            try{
+                System.out.print(mensaje);
+                valor = scanner.nextInt();
+                if (valor <= 0) {
+                    System.out.println("El valor debe ser un número positivo. Intente nuevamente.");
+                }else{
+                    return valor;
+                }
+            }catch (InputMismatchException e ) {
+                System.out.println("Intente nuevamente.");
+                scanner.next();
             }
-        } while (valor <= 0);
-        return valor;
+        } while (true);
     }
 
     // Método para obtener una cadena de texto
