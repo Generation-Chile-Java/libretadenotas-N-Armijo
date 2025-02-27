@@ -14,7 +14,7 @@ class LibretaDeNotas {
         int cantidadNotas = obtenerEnteroPositivo("Ingrese la cantidad de notas por alumno: ");
 
         for (int i = 0; i < cantidadAlumnos; i++) {
-            String nombre = obtenerCadena("Ingrese el nombre del alumno " + (i + 1) + ": ");
+            String nombre = obtenerNombre("Ingrese el nombre del alumno " + (i + 1) + ": ");
             ArrayList<Double> notas = new ArrayList<>();
 
             for (int j = 0; j < cantidadNotas; j++) {
@@ -118,11 +118,11 @@ class LibretaDeNotas {
 
     // Método para verificar si una nota es aprobatoria o reprobatoria
     private void verificarAprobacion() {
-        String nombre = obtenerCadena("Ingrese el nombre del estudiante: ");
+        String nombre = obtenerNombre("Ingrese el nombre del estudiante: ");
 
         if (calificaciones.containsKey(nombre)) {
             double nota = obtenerNotaValida("Ingrese la nota a verificar: ");
-            if (nota >= 6) {
+            if (nota >= 4) {
                 System.out.println("La nota es Aprobatoria.");
             } else {
                 System.out.println("La nota es Reprobatoria.");
@@ -134,7 +134,7 @@ class LibretaDeNotas {
 
     // Método para verificar si una nota está por encima o por debajo del promedio del curso
     private void verificarSobrePromedio() {
-        String nombre = obtenerCadena("Ingrese el nombre del estudiante: ");
+        String nombre = obtenerNombre("Ingrese el nombre del estudiante: ");
 
         if (calificaciones.containsKey(nombre)) {
             double nota = obtenerNotaValida("Ingrese la nota a verificar: ");
@@ -167,7 +167,7 @@ class LibretaDeNotas {
     }
 
     // Método para obtener una cadena de texto
-    private String obtenerCadena(String mensaje) {
+    private String obtenerNombre(String mensaje) {
         Scanner scanner = new Scanner(System.in);
         String entrada;
         while(true){
@@ -181,19 +181,30 @@ class LibretaDeNotas {
         }
     }
 
-    // Método para obtener una nota válida (entre 0 y 10)
+    // Método para obtener una nota válida (entre 1 y 7)
     private double obtenerNotaValida(String mensaje) {
         Scanner scanner = new Scanner(System.in);
         double nota;
-        do {
+
+        while (true) {
             System.out.print(mensaje);
-            nota = scanner.nextDouble();
-            if (nota < 0 || nota > 10) {
-                System.out.println("La nota debe estar entre 0 y 10. Intente nuevamente.");
+            try {
+                String input = scanner.next().replace(",", "."); // Reemplazar coma con punto
+                nota = Double.parseDouble(input);
+
+                if (nota >= 1 && nota <= 7) {
+                    break; // Salir del bucle si la nota es válida
+                } else {
+                    System.out.println("Error: La nota debe estar entre 1 y 7.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Ingrese un número válido.");
             }
-        } while (nota < 0 || nota > 10);
+        }
+
         return nota;
     }
+
 
     // Método para obtener una opción válida del menú
     private int obtenerOpcionValida(String mensaje, int min, int max) {
