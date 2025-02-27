@@ -1,6 +1,10 @@
 import java.util.*;
 
 class LibretaDeNotas {
+    private static final double NOTA_MINIMA = 1.0;
+    private static final double NOTA_MAXIMA = 7.0;
+    private static final double NOTA_APROBATORIA = 4.0;
+
     private HashMap<String, ArrayList<Double>> calificaciones;
     private double promedioCurso;
 
@@ -70,8 +74,8 @@ class LibretaDeNotas {
                     default:
                         System.out.println("Opción no válida. Intente nuevamente.");
                 }
-            }catch ( InputMismatchException e ) {
-                System.out.println("Opcion no valida.Ingresa un numero entero");
+            } catch (InputMismatchException e) {
+                System.out.println("Opción no válida. Ingresa un número entero.");
             }
         } while (continuar);
     }
@@ -126,7 +130,7 @@ class LibretaDeNotas {
 
         if (calificaciones.containsKey(nombre)) {
             double nota = obtenerNotaValida("Ingrese la nota a verificar: ");
-            if (nota >= 4) {
+            if (nota >= NOTA_APROBATORIA) {
                 System.out.println("La nota es Aprobatoria.");
             } else {
                 System.out.println("La nota es Reprobatoria.");
@@ -161,15 +165,15 @@ class LibretaDeNotas {
         Scanner scanner = new Scanner(System.in);
         int valor;
         do {
-            try{
+            try {
                 System.out.print(mensaje);
                 valor = scanner.nextInt();
                 if (valor <= 0) {
                     System.out.println("El valor debe ser un número positivo. Intente nuevamente.");
-                }else{
+                } else {
                     return valor;
                 }
-            }catch (InputMismatchException e ) {
+            } catch (InputMismatchException e) {
                 System.out.println("Intente nuevamente.");
                 scanner.next();
             }
@@ -180,13 +184,13 @@ class LibretaDeNotas {
     private String obtenerNombre(String mensaje) {
         Scanner scanner = new Scanner(System.in);
         String entrada;
-        while(true){
+        while (true) {
             System.out.print(mensaje);
             entrada = scanner.nextLine();
-            if(entrada.matches("[a-zA-z]+")){
-                return entrada;
+            if (entrada.matches("[a-zA-Z\\s]+")) {
+                return entrada.toUpperCase();
             } else {
-                System.out.println("Entrada no valida. Solo se permiten letras.\nIntentalo nuevamente");
+                System.out.println("Entrada no válida. Solo se permiten letras y espacios.\nInténtalo nuevamente.");
             }
         }
     }
@@ -202,10 +206,10 @@ class LibretaDeNotas {
                 String input = scanner.next().replace(",", "."); // Reemplazar coma con punto
                 nota = Double.parseDouble(input);
 
-                if (nota >= 1 && nota <= 7) {
+                if (nota >= NOTA_MINIMA && nota <= NOTA_MAXIMA) {
                     break; // Salir del bucle si la nota es válida
                 } else {
-                    System.out.println("Error: La nota debe estar entre 1 y 7.");
+                    System.out.println("Error: La nota debe estar entre " + NOTA_MINIMA + " y " + NOTA_MAXIMA + ".");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error: Ingrese un número válido.");
@@ -214,7 +218,6 @@ class LibretaDeNotas {
 
         return nota;
     }
-
 
     // Método para obtener una opción válida del menú
     private int obtenerOpcionValida(String mensaje, int min, int max) {
