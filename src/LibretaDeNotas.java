@@ -44,30 +44,36 @@ class LibretaDeNotas {
     // Método para mostrar el menú y manejar las opciones
     public void mostrarMenu() {
         int opcion;
+        boolean continuar = true;
         do {
             mostrarOpcionesMenu();
-            opcion = obtenerOpcionValida("Seleccione una opción: ", 0, 4);
+            try {
+                opcion = obtenerOpcionValida("Seleccione una opción: ", 0, 4);
 
-            switch (opcion) {
-                case 1:
-                    mostrarPromedios();
-                    break;
-                case 2:
-                    mostrarNotasMaximasYMinimas();
-                    break;
-                case 3:
-                    verificarAprobacion();
-                    break;
-                case 4:
-                    verificarSobrePromedio();
-                    break;
-                case 0:
-                    System.out.println("Saliendo del menú...");
-                    break;
-                default:
-                    System.out.println("Opción no válida. Intente nuevamente.");
+                switch (opcion) {
+                    case 1:
+                        mostrarPromedios();
+                        break;
+                    case 2:
+                        mostrarNotasMaximasYMinimas();
+                        break;
+                    case 3:
+                        verificarAprobacion();
+                        break;
+                    case 4:
+                        verificarSobrePromedio();
+                        break;
+                    case 0:
+                        System.out.println("Saliendo del menú...");
+                        continuar = false;
+                        break;
+                    default:
+                        System.out.println("Opción no válida. Intente nuevamente.");
+                }
+            }catch ( InputMismatchException e ) {
+                System.out.println("Opcion no valida.Ingresa un numero entero");
             }
-        } while (opcion != 0);
+        } while (continuar);
     }
 
     // Método para mostrar las opciones del menú
