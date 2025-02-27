@@ -169,8 +169,16 @@ class LibretaDeNotas {
     // Método para obtener una cadena de texto
     private String obtenerCadena(String mensaje) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print(mensaje);
-        return scanner.next();
+        String entrada;
+        while(true){
+            System.out.print(mensaje);
+            entrada = scanner.nextLine();
+            if(entrada.matches("[a-zA-z]+")){
+                return entrada;
+            } else {
+                System.out.println("Entrada no valida. Solo se permiten letras.\nIntentalo nuevamente");
+            }
+        }
     }
 
     // Método para obtener una nota válida (entre 0 y 10)
